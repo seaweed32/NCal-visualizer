@@ -1,0 +1,170 @@
+#file_input_button {
+    position: relative;
+    display: block;
+    height: 200px;
+    width: 500px;
+    align-items: center;
+    top: 30%;
+    left: 35%;
+    background-color: olivedrab;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#choose {
+    display: block;
+    position: relative;
+    top: 10px;
+    font-size: 50px;
+}
+
+#drop {
+    display: block;
+    position: relative;
+    top: -25px;
+    margin: auto;
+    height: 100px;
+    width: 450px;
+    font-size: 25px;
+    border-radius: 4px;
+    border-style: dashed;
+    border-color: darkgreen;
+}
+
+#display_box {
+    display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-y: scroll;
+    position: fixed;
+    text-align: center;
+    top: 50px;
+    left: 65px;
+    height: 600px;
+    width: 1400px;
+    border: 3px;
+    border-style: solid;
+    border-color: darkgray;
+}
+
+.day {
+    display: inherit;
+    position: relative;
+    overflow: hidden;
+    width: 1395px;
+    height: 30px;
+    text-align: left;
+    line-height: 30px;
+    font-size: 20px;
+    background-color: lightgray;
+    border-color: rgb(128,128,128);
+    border-width: 3px;
+    border-style: solid;
+}
+
+.day:hover {
+    border-color: rgb(150,150,150);
+    cursor: pointer;
+}
+
+#discription_box {
+    display: none;
+    position: fixed;
+    height: 500px;
+    width: 700px;
+    top: 60px;
+    left: 25%;
+    border: 4px solid rgb(128,128,128);
+    background-color: lightgray;
+}
+
+#day_info {
+    display: block;
+    position: relative;
+    text-align: center;
+    line-height: 30px;
+    height: 30px;
+    width: 588px;
+    font-size: 20px;
+    border: 4px solid darkgray;
+}
+
+#close_button {
+    display: block;
+    position: relative;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 100px;
+    top: -38px;
+    left: 592px;
+    font-size: 20px;
+    border: 4px solid darkgray;
+    cursor: pointer;
+}
+
+#text_box {
+    display: block;
+    position: relative;
+    height: 461px;
+    width: 690px;
+    top: -37px;
+    left: 5px;
+    text-align: left;
+    overflow: hidden;
+    overflow-y: scroll;
+    font-size: 20px;
+}
+
+.button {
+    display: none;
+    position: fixed;
+    text-align: center;
+    background-color: lightgray;
+    border: 4px solid rgb(128,128,128);
+    border-radius: 8px;
+}
+
+.button:hover {
+    border-color: rgb(150,150,150);
+    cursor: pointer;
+}
+
+#download_button {
+    height: 20px;
+    width: 80px;
+    top: 15px;
+    left: 65px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+}
+
+#back_button {
+    height: 20px;
+    width: 80px;
+    top: 15px;
+    left: 160px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+}
+
+#sort_menu {
+    height: 28px;
+    width: 88px;
+    top: 15px;
+    left: 255px;    
+}
+
+#sort_dir {
+    height: 20px;
+    width: 30px;
+    top: 15px;
+    left: 350px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;   
+}
