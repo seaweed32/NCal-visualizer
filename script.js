@@ -12,47 +12,48 @@ document.getElementById('sort_menu').addEventListener('change', () => sortAndDis
 document.getElementById('sort_dir').addEventListener('click', () => swapSortDirection());
 
 function sortAndDisplay(value){
-    function sort(valuePosition){
-        let dayHoldArr = [];
-        //fill the above array with arrays of values from the finalRecord
-        for(let key in finalRecord){
-            let day = finalRecord[key];
-            //date, rating, note, date as ms, rating as float, note length
-            dayHoldArr.push([day['date'],day['rating'],day['note'],new Date(day['date']).getTime(),parseFloat(day['rating'].split('/')[0]),day['note'].length]);
-        }
-        //sort the array by the value at the input index
-        //some slight chatGPT was involved in this part because my brain shat itself, and apparently NaN is not equal to itself...????????????????????????????? 
-        dayHoldArr.sort(function(a, b) {
-            let aValue = a[valuePosition];
-            let bValue = b[valuePosition];
-
-            if (isNaN(aValue) && isNaN(bValue)) {
-                return 0;
-            } else if (isNaN(aValue)) {
-                return -1;
-            } else if (isNaN(bValue)) {
-                return 1;
-            } else {
-                return aValue - bValue;
-            }
-        });
-        let sortedObj = {};
-        //rebuild the object, but sorted
-        for(let item of dayHoldArr){
-            sortedObj[dayHoldArr.indexOf(item)] = {};
-            sortedObj[dayHoldArr.indexOf(item)].date = item[0];
-            sortedObj[dayHoldArr.indexOf(item)].rating = item[1];
-            sortedObj[dayHoldArr.indexOf(item)].note = item[2];
-        }
-        curRecord = sortedObj;
-        return sortedObj;
-    }
     document.getElementById('sort_dir').innerHTML = '⮟';
     document.getElementById('display_box').scrollTo(0,0);
     //input the correct index for the sort function depending on the sort value
     if(value == 'date') displayDayList(sort(3));
     else if(value == 'rating') displayDayList(sort(4));
     else if(value == 'length') displayDayList(sort(5));
+}
+
+function sort(valuePosition){
+    let dayHoldArr = [];
+    //fill the above array with arrays of values from the finalRecord
+    for(let key in finalRecord){
+        let day = finalRecord[key];
+        //date, rating, note, date as ms, rating as float, note length
+        dayHoldArr.push([day['date'],day['rating'],day['note'],new Date(day['date']).getTime(),parseFloat(day['rating'].split('/')[0]),day['note'].length]);
+    }
+    //sort the array by the value at the input index
+    //some slight chatGPT was involved in this part because my brain shat itself, and apparently NaN is not equal to itself...????????????????????????????? 
+    dayHoldArr.sort(function(a, b) {
+        let aValue = a[valuePosition];
+        let bValue = b[valuePosition];
+
+        if (isNaN(aValue) && isNaN(bValue)) {
+            return 0;
+        } else if (isNaN(aValue)) {
+            return -1;
+        } else if (isNaN(bValue)) {
+            return 1;
+        } else {
+            return aValue - bValue;
+        }
+    });
+    let sortedObj = {};
+    //rebuild the object, but sorted
+    for(let item of dayHoldArr){
+        sortedObj[dayHoldArr.indexOf(item)] = {};
+        sortedObj[dayHoldArr.indexOf(item)].date = item[0];
+        sortedObj[dayHoldArr.indexOf(item)].rating = item[1];
+        sortedObj[dayHoldArr.indexOf(item)].note = item[2];
+    }
+    curRecord = sortedObj;
+    return sortedObj;
 }
 
 function swapSortDirection(){
@@ -166,7 +167,7 @@ function displayDayList(data){
             displayDiscription(data[event.target.id]);
         });
     });
-    document.getElementById('download_button').addEventListener('click',() => downloadFunc(proccessObjForFile()));
+    document.getElementById('download_button').addEventListener('click',() => {if(!displayOpen) downloadFunc(proccessObjForFile())});
     document.getElementById('back_button').addEventListener('click',() => {if(!displayOpen) window.location.reload();});
 }
 
@@ -180,6 +181,8 @@ function displayDiscription(day){
             dispBox.style.opacity = '100%';
             document.getElementById('download_button').style.opacity = '100%';
             document.getElementById('back_button').style.opacity = '100%';
+            document.getElementById('sort_menu').style.opacity = '100%';
+            document.getElementById('sort_dir').style.opacity = '100%';
             box.style.display = 'none';
             displayOpen = false;
         })
@@ -187,6 +190,8 @@ function displayDiscription(day){
         dispBox.style.opacity = '60%';
         document.getElementById('download_button').style.opacity = '60%';
         document.getElementById('back_button').style.opacity = '60%';
+        document.getElementById('sort_menu').style.opacity = '60%';
+        document.getElementById('sort_dir').style.opacity = '60%';
         box.style.display = 'block';
         //add specific day info to the box
         document.getElementById('day_info').innerHTML = `${day.date} ----- ${day.rating}`
@@ -218,8 +223,9 @@ function curDate(){
 //this formats the object that all the data is stored in, turning it into a string and making it readable in the downloaded file
 function proccessObjForFile(){
     let textContent = 'Date - Rating - Description\n----------------------------------------\n\n';
-    for(let key in finalRecord){
-        let prop = finalRecord[key];
+    let sortedObj = sort(3);
+    for(let key in sortedObj){
+        let prop = sortedObj[key];
         textContent += `${prop.date} - ${prop.rating}\n\n${prop.note}\n\n----------------------------------------\n\n`;
     }
     return textContent;
