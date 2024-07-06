@@ -11,13 +11,17 @@ document.getElementById('file_input_button').addEventListener('click', () => fil
 document.getElementById('sort_menu').addEventListener('change', () => sortAndDisplay(document.getElementById('sort_menu').value));
 document.getElementById('sort_dir').addEventListener('click', () => swapSortDirection());
 
+const valueToIndex = {
+    'date': 3,
+    'rating': 4,
+    'length': 5
+};
+
 function sortAndDisplay(value){
     document.getElementById('sort_dir').innerHTML = '⮟';
     document.getElementById('display_box').scrollTo(0,0);
     //input the correct index for the sort function depending on the sort value
-    if(value == 'date') displayDayList(sort(3));
-    else if(value == 'rating') displayDayList(sort(4));
-    else if(value == 'length') displayDayList(sort(5));
+    displayDayList(sort(valueToIndex[value]));
 }
 
 function sort(valuePosition){
@@ -214,7 +218,7 @@ function curDate(){
 //this formats the object that all the data is stored in, turning it into a string and making it readable in the downloaded file
 function proccessObjForFile(){
     let textContent = 'Date - Rating - Description\n----------------------------------------\n\n';
-    let sortedObj = sort(3);
+    let sortedObj = sort(valueToIndex[document.getElementById('sort_menu').value]);
     for(let key in sortedObj){
         let prop = sortedObj[key];
         textContent += `${prop.date} - ${prop.rating}\n\n${prop.note}\n\n----------------------------------------\n\n`;
@@ -224,10 +228,21 @@ function proccessObjForFile(){
 //simple search setup
 document.getElementById('search_box').addEventListener('input', search);
 function search(){
-    let text = document.getElementById('search_box').value;
-    if(text){
-        console.log(text)
+    let searchText = document.getElementById('search_box').value;
+    let resultsObj = {};
+    const regex = new RegExp(searchText, 'gi');
+    if(searchText){
+        let sortedObj = sort(valueToIndex[document.getElementById('sort_menu').value]);
+        for(let key in sortedObj){
+            let prop = sortedObj[key];
+            if(prop.note.match(regex)){
+                resultsObj[key] = prop;
+            }
+        }
+        displayDayList(resultsObj);
+        document.getElementById('sort_dir').innerHTML = '⮟';
+        document.getElementById('display_box').scrollTo(0,0);
     } else {
-        console.log('clear')
+        sortAndDisplay(document.getElementById('sort_menu').value);
     }
 }
