@@ -10,6 +10,8 @@ document.getElementById('file_input_button').addEventListener('click', () => fil
 //sort by whatever the chosen value is from the sort menu when a change is detected, aka, sort when asked to sort
 document.getElementById('sort_menu').addEventListener('change', () => sortAndDisplay(document.getElementById('sort_menu').value));
 document.getElementById('sort_dir').addEventListener('click', () => swapSortDirection());
+document.getElementById('download_button').addEventListener('click',() => downloadFunc(proccessObjForFile()));
+document.getElementById('back_button').addEventListener('click',() => window.location.reload());
 
 const valueToIndex = {
     'date': 3,
@@ -170,8 +172,6 @@ function displayDayList(data){
             displayDescription(data[event.target.id]);
         });
     });
-    document.getElementById('download_button').addEventListener('click',() => downloadFunc(proccessObjForFile()));
-    document.getElementById('back_button').addEventListener('click',() => window.location.reload());
 }
 
 function displayDescription(day){
