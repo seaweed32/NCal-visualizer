@@ -33,6 +33,7 @@
 }
 
 #display_box {
+    margin-left: -625px;
     display: none;
     white-space: nowrap;
     overflow: hidden;
@@ -41,9 +42,9 @@
     position: fixed;
     text-align: center;
     top: 50px;
-    left: 65px;
+    left: 50%;
     height: 600px;
-    width: 1400px;
+    width: 1250px;
     border: 3px;
     border-style: solid;
     border-color: darkgray;
@@ -53,7 +54,7 @@
     display: inherit;
     position: relative;
     overflow: hidden;
-    width: 1395px;
+    width: inherit;
     height: 30px;
     text-align: left;
     line-height: 30px;
@@ -69,7 +70,7 @@
     cursor: pointer;
 }
 
-#discription_box {
+#description_box {
     display: none;
     position: fixed;
     height: 500px;
@@ -82,9 +83,11 @@
 
 #day_info {
     display: block;
-    position: relative;
+    position: absolute;
     text-align: center;
     line-height: 30px;
+    top: 0px;
+    left: 0px;
     height: 30px;
     width: 588px;
     font-size: 20px;
@@ -93,13 +96,13 @@
 
 #close_button {
     display: block;
-    position: relative;
+    position: absolute;
     height: 30px;
     line-height: 30px;
     text-align: center;
     width: 100px;
-    top: -38px;
-    left: 592px;
+    top: 0px;
+    right: 0px;
     font-size: 20px;
     border: 4px solid darkgray;
     cursor: pointer;
@@ -107,10 +110,10 @@
 
 #text_box {
     display: block;
-    position: relative;
+    position: absolute;
     height: 461px;
     width: 690px;
-    top: -37px;
+    top: 40px;
     left: 5px;
     text-align: left;
     overflow: hidden;
@@ -167,4 +170,32 @@
     text-align: center;
     line-height: 20px;
     font-size: 15px;   
+}
+
+#search_box {
+    top: 15px;
+    left: 395px;
+    width: 450px;
+    height: 27px;
+    line-height: -5px;
+    text-align: left;
+    cursor: text;
+    resize: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#search_box:focus {
+    outline: none;
+}
+
+#screen_cover {
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    opacity: 50%;
+    background-color: rgb(255, 255, 255);
 }

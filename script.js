@@ -120,7 +120,7 @@ function processText(text){
     for(let i=0; i<notes.length; i++){
         let element = notes[i];
         if(element) notes[i] = element.replace(/^"|"$|(?<=")"/g,'');
-        else notes[i] = 'No discription';
+        else notes[i] = 'No description';
     };
     //assemble the object from the arrays
     for(i=0;i<dates.length;i++){
@@ -140,15 +140,14 @@ function formatDate(time){
 function displayDayList(data){
     //show and hide stuff
     document.getElementById('file_input_button').style.display = 'none';
-    document.getElementById('download_button').style.display = 'block';
-    document.getElementById('back_button').style.display = 'block';
-    document.getElementById('sort_menu').style.display = 'block';
-    document.getElementById('sort_dir').style.display = 'block';
+    Array.from(document.getElementsByClassName('button')).forEach((element) => {
+        element.style.display = 'block';
+    });
     const dispBox = document.getElementById('display_box');
     dispBox.innerHTML = '';
     let lables = document.createElement('div');
     lables.className = 'day';
-    lables.innerHTML = 'Date ----- Rating ----- Discription';
+    lables.innerHTML = 'Date ----- Rating ----- Description';
     lables.id = 'lables';
     dispBox.appendChild(lables);
     dispBox.style.display = 'block';
@@ -164,34 +163,26 @@ function displayDayList(data){
     //make each day clickable with a display
     Array.from(document.getElementsByClassName('day')).forEach((element) => {
         element.addEventListener('click', function (event){
-            displayDiscription(data[event.target.id]);
+            displayDescription(data[event.target.id]);
         });
     });
-    document.getElementById('download_button').addEventListener('click',() => {if(!displayOpen) downloadFunc(proccessObjForFile())});
-    document.getElementById('back_button').addEventListener('click',() => {if(!displayOpen) window.location.reload();});
+    document.getElementById('download_button').addEventListener('click',() => downloadFunc(proccessObjForFile()));
+    document.getElementById('back_button').addEventListener('click',() => window.location.reload());
 }
 
-function displayDiscription(day){
+function displayDescription(day){
     if(!displayOpen){
         displayOpen = true;
-        const dispBox = document.getElementById('display_box');
-        const box = document.getElementById('discription_box');
+        const box = document.getElementById('description_box');
         //add a function to the close button that will undo the code below this and close the box
         document.getElementById('close_button').addEventListener('click', function(){
-            dispBox.style.opacity = '100%';
-            document.getElementById('download_button').style.opacity = '100%';
-            document.getElementById('back_button').style.opacity = '100%';
-            document.getElementById('sort_menu').style.opacity = '100%';
-            document.getElementById('sort_dir').style.opacity = '100%';
+            document.getElementById('text_box').scrollTo(0,0);
+            document.getElementById('screen_cover').style.display = 'none';
             box.style.display = 'none';
             displayOpen = false;
-        })
+        });
         //cloud out the stuff behind the description box
-        dispBox.style.opacity = '60%';
-        document.getElementById('download_button').style.opacity = '60%';
-        document.getElementById('back_button').style.opacity = '60%';
-        document.getElementById('sort_menu').style.opacity = '60%';
-        document.getElementById('sort_dir').style.opacity = '60%';
+        document.getElementById('screen_cover').style.display = 'block';
         box.style.display = 'block';
         //add specific day info to the box
         document.getElementById('day_info').innerHTML = `${day.date} ----- ${day.rating}`
@@ -230,4 +221,13 @@ function proccessObjForFile(){
     }
     return textContent;
 }
-
+//simple search setup
+document.getElementById('search_box').addEventListener('input', search);
+function search(){
+    let text = document.getElementById('search_box').value;
+    if(text){
+        console.log(text)
+    } else {
+        console.log('clear')
+    }
+}
