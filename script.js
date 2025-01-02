@@ -221,7 +221,7 @@ function proccessObjForFile(){
     let sortedObj = sort(valueToIndex[document.getElementById('sort_menu').value]);
     for(let key in sortedObj){
         let prop = sortedObj[key];
-        textContent += `${prop.date} - ${prop.rating}\n\n${prop.note}\n\n----------------------------------------\n\n`;
+        textContent += `${prop.date} - ${prop.rating}\n\n${prop.note}\n----------------------------------------\n`;
     }
     return textContent;
 }
